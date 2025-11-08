@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> ans;
+
+        for(int x : asteroids) {
+            int destroyed = 0;
+
+            if(x > 0) {
+                ans.push_back(x);
+            } else {
+                while(!ans.empty() && ans.back() > 0 && ans.back() < -x) {
+                    ans.pop_back();
+                }
+
+                if(!ans.empty() && ans.back() > 0 && ans.back() == -x) {
+                    ans.pop_back();
+                    destroyed = 1;
+                }
+
+                if(ans.empty() || ans.back() < 0) {
+                    if(!destroyed) ans.push_back(x);
+                }
+            }
+        }
+
+        return ans;
+    }
+};
