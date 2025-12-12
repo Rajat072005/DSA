@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        vector<int>suffixmax(n,-1);
+        suffixmax[n-1] = height[n-1];
+        int maxi = height[n-1];
+
+        for(int i =  n-2 ; i>=0 ; i--){
+            suffixmax[i] = max(maxi , height[i]);
+            maxi = suffixmax[i];
+        }
+        int maxi1 = height[0];
+        int lmax = -1;
+        int total = 0;
+        for(int i = 0 ; i<n ; i++){
+            int rmax = suffixmax[i];
+            lmax = max(maxi1 , height[i]);
+            maxi1 = lmax;
+
+            if(height[i] < lmax && height[i]<rmax){
+                total += min(lmax,rmax) - height[i];
+            }
+        }
+        return total;
+    }
+};
