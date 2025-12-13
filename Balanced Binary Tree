@@ -1,0 +1,40 @@
+class Solution {
+public:
+
+    int depth(TreeNode* root){
+        if(root == NULL)return 0;
+
+        int left;
+        int right;
+        int recurr1 = depth(root->left);
+        int recurr2 = depth(root->right);
+        
+        if(recurr1 == -1)return -1;
+        else{
+            left = 1 + recurr1;
+        }
+
+        if(recurr2 == -1)return -1;
+        else{
+            right = 1 + recurr2;
+        }
+
+        if(abs(left-right) > 1 ){
+            return -1;
+        }
+        else{
+            return max(left , right);
+        }
+
+
+    }
+
+    bool isBalanced(TreeNode* root) {
+        int ans = depth(root);
+        if(ans == -1 )return false;
+        else{
+            return true;
+        }
+        
+    }
+};
