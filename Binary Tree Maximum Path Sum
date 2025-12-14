@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxi = INT_MIN;
+
+    int maximum(TreeNode* root) {
+        if (root == NULL) return 0;
+
+        // Ignore negative paths
+        int lval = max(0, maximum(root->left));
+        int rval = max(0, maximum(root->right));
+
+        // Path passing through current node
+        int currPath = lval + rval + root->val;
+
+        // Update global maximum
+        maxi = max(maxi, currPath);
+
+        // Return max path going upwards (only one side)
+        return root->val + max(lval, rval);
+    }
+
+    int maxPathSum(TreeNode* root) {
+        maximum(root);
+        return maxi;
+    }
+};
