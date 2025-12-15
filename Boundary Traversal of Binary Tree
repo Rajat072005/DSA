@@ -1,0 +1,53 @@
+void leftTraverse(TreeNode<int>* root, vector<int>& ans) {
+    if (!root) return;
+    if (!root->left && !root->right) return; // skip leaves
+
+    ans.push_back(root->data);
+
+    if (root->left)
+        leftTraverse(root->left, ans);
+    else{
+        leftTraverse(root->right, ans);
+    }
+    return;
+        
+}
+
+void leafTraverse(TreeNode<int> *root , vector<int>& ans){
+    if(root == NULL)return;
+    if(root->left == NULL && root->right == NULL){
+        ans.push_back(root->data);
+        return;
+    }
+    
+    leafTraverse(root->left,ans);
+    leafTraverse(root->right,ans);
+    return;
+}
+
+void rightTraverse(TreeNode<int> *root , vector<int>& ans){
+    if(root == NULL)return;
+
+    if(root->left == NULL && root->right == NULL)return;
+    if (root->right)
+        rightTraverse(root->right, ans);
+    else{
+        rightTraverse(root->left, ans);
+    }
+    ans.push_back(root->data);
+    return;
+
+}
+
+vector<int> traverseBoundary(TreeNode<int> *root)
+{
+	// Write your code here.
+    vector<int>ans;
+    ans.push_back(root->data);
+    leftTraverse(root->left , ans);
+    leafTraverse(root->left, ans);
+    leafTraverse(root->right, ans);
+    rightTraverse(root->right , ans);
+    return ans;
+
+}
