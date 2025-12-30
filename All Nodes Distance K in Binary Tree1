@@ -1,0 +1,72 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        queue<TreeNode*>q;
+        unordered_map<TreeNode* , TreeNode*>mpp;
+        vector<int>ans;
+
+        q.push(root);
+
+        while(!q.empty()){
+            int size = q.size();
+            for(int i = 0 ; i<size ; i++){
+                TreeNode* node = q.front();
+                q.pop();
+
+
+                if(node->left){
+                    q.push(node->left);
+                    mpp[node->left] = node;
+                }
+                if(node->right){
+                    q.push(node->right);
+                    mpp[node->right] = node;
+                }
+
+            }
+        }
+
+        q.push(target);
+        unordered_set<int>s;
+
+        while(!q.empty()){
+            if(k==0)break;
+            int size = q.size();
+            for(int i = 0 ; i<size ; i++){
+                
+                TreeNode* node = q.front();
+                
+                q.pop();
+                if(node->left && !s.count(node->left->val)){
+                    q.push(node->left);
+                }
+                if(node->right && !s.count(node->right->val)){
+                    q.push(node->right);
+                }
+                if(mpp.find(node) != mpp.end()){
+                    auto x = mpp[node];
+                    if(!s.count(x->val)){
+                        q.push(mpp[node]);
+                    }
+                }
+                s.insert(node->val);
+            }
+            k--;
+        }
+        while(!q.empty()){
+            auto p = q.front();
+            ans.push_back(p->val);
+            q.pop();
+        }
+        return ans;
+    }
+};
