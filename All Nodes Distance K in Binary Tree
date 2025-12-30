@@ -1,0 +1,46 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int flag = 0;
+
+    void traverse(TreeNode* root, TreeNode* target ,vector<int>&ans ,  int k){
+        if(!root)return;
+        if(root == target){
+            flag  = 1;
+            traverse(root->left , target , ans  , k);
+            traverse(root->right , target , ans  , k);
+            return;
+        }
+        if(flag){
+            k--;
+            if(k==0){
+                ans.push_back(root->val);
+                return;
+            }
+            traverse(root->left , target , ans  , k);
+            traverse(root->right , target , ans , k);
+            return;
+        }
+
+
+        traverse(root->left ,target, ans , k);
+        if(flag)k--;
+        traverse(root->right ,target, ans ,  k);
+        return;
+    }
+
+
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int>ans;
+        traverse(root,target,ans,k);
+        return ans;
+    }
+};
