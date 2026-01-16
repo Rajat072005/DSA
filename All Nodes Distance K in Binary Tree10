@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        unordered_map<TreeNode* , TreeNode*>mpp;
+        vector<int>ans;
+        queue<TreeNode*>q;
+        q.push(root);
+
+        while(!q.empty()){
+            int size = q.size();
+            for(int i = 0 ; i<size ; i++){
+                auto p = q.front();
+                q.pop();
+                if(p->left){
+                    mpp[p->left] = p;
+                    q.push(p->left);
+                }
+                if(p->right){
+                    mpp[p->right] = p;
+                    q.push(p->right);
+                }
+            }
+        }
+
+        q.push(target);
+        unordered_set<int>visited;
+
+        while(!q.empty() && k != 0){
+            int size = q.size();
+            for(int i = 0 ; i<size ; i++){
+                auto p = q.front();
+                q.pop();
+                visited.insert(p->val);
+                if(p->left && visited.find(p->left->val) == visited.end()){
+                    q.push(p->left);
+                }
+                if(p->right && visited.find(p->right->val) == visited.end()){
+                    q.push(p->right);
+                }
+                if(mpp.find(p) != mpp.end() && visited.find(mpp[p]->val) == visited.end()){
+                q.push(mpp[p]);
+                }
+            }
+            k--;
+            
+        }
+        while(!q.empty()){
+            auto p = q.front();
+            ans.push_back(p->val);
+            q.pop();
+        }
+        return ans;
+    }
+};
