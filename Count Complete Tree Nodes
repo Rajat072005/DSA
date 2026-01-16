@@ -1,0 +1,18 @@
+class Solution {
+public:
+
+    int count = 0;
+    void traverse(TreeNode* root ){
+        if(!root)return;
+
+        count++;
+        traverse(root->left );
+        traverse(root->right);
+        return;
+    }
+
+    int countNodes(TreeNode* root) {
+        traverse(root);
+        return count;
+    }
+};
