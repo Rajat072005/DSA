@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        queue<pair<pair<int,int> , int>>q;
+        vector<vector<int>>vis(mat.size() , vector<int>(mat[0].size()));
+        vector<vector<int>>dist(mat.size() , vector<int>(mat[0].size()));
+        for(int i = 0 ; i<mat.size(); i++){
+            for(int j = 0 ; j<mat[0].size() ; j++){
+                if(mat[i][j] == 0){
+                    q.push({{i,j} , 0});
+                    vis[i][j] = 1;
+                }
+            }
+        }
+        int delrow[] = {-1 , 0 , 1 , 0};
+        int delcol[] = {0, 1 , 0 , -1};
+        while(!q.empty()){
+            int row = q.front().first.first;
+            int col = q.front().first.second;
+            int step = q.front().second;
+            dist[row][col] = step;
+            q.pop();
+
+            for(int i = 0 ; i<4 ; i++){
+                int nrow = row + delrow[i];
+                int ncol = col + delcol[i];
+
+                if(nrow >= 0 && nrow<mat.size() && ncol>=0 && ncol<mat[0].size() && mat[nrow][ncol] == 1 && !vis[nrow][ncol]){
+                    q.push({{nrow , ncol} , step + 1});
+                    vis[nrow][ncol] = 1;
+                }
+            }
+
+        }
+        return dist;
+        
+    }
+};
