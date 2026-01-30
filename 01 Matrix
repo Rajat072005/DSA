@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        vector<pair<int,int>>options;
+        for(int i = 0 ; i<mat.size(); i++){
+            for(int j = 0 ; j<mat[i].size() ; j++){
+                if(mat[i][j] == 0){
+                    options.push_back({i,j});
+                }
+            }
+        }
+
+        vector<vector<int>> ans(mat.size(), vector<int>(mat[0].size()));
+
+        for(int i = 0 ; i<mat.size() ; i++){
+            for(int j = 0 ; j<mat[i].size() ; j++){
+                if(mat[i][j] == 1){
+                    int mini = INT_MAX;
+                    int row,col;
+                    for(auto it : options){
+                        row = it.first;
+                        col = it.second;
+                        mini = min(mini , abs(row-i) + abs(col-j));
+                    }
+                    ans[i][j] = mini;
+                }
+            }
+        }
+        return ans;
+
+    }
+};
