@@ -1,0 +1,30 @@
+class Solution {
+public:
+    string make(int n , string Sn){
+        if(n == 1){
+            Sn += "0";
+            return Sn;
+        }
+        string got = make(n-1 , Sn);
+        string RI = got;
+        for(char &a : RI){
+            a = (a == '0') ? '1' : '0';
+        }
+        reverse(RI.begin() , RI.end());
+
+        Sn += got + "1" + RI;
+        return Sn;
+
+    }
+    char findKthBit(int n, int k) {
+        string Sn = "";
+        Sn = make(n , Sn);
+        int i;
+        for( i = 0 ; i<Sn.size() ; i++){
+            if(i+1 == k){
+                break;
+            }
+        }
+        return Sn[i];
+    }
+};
