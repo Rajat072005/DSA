@@ -1,0 +1,45 @@
+class Solution {
+public:
+    int minOperations(string s) {
+        stack<int>st1;
+        stack<int>st2;
+        
+        int temp1Ans = 0;
+        int temp2Ans = 0;
+        string temp1 = s;
+        string temp2 = s;
+        for(int i = 0 ; i<temp1.size() ; i++){
+            if(st1.empty()){
+                st1.push(temp1[i] - '0');
+            }
+            else if(((temp1[i] - '0') ^ st1.top()) == 1){
+                st1.push(temp1[i] - '0');
+            }
+            else{
+                temp1[i] ^= 1;
+                temp1Ans++;
+                st1.push(temp1[i] - '0');
+            }
+
+        }
+        temp2[0] ^= 1;
+        temp2Ans++;
+        for(int i = 0 ; i<temp2.size() ; i++){
+            if(st2.empty()){
+                st2.push(temp2[i] - '0');
+            }
+            else if(((temp2[i] - '0') ^ st2.top()) == 1){
+                st2.push(temp2[i] - '0');
+            }
+            else{
+                temp2[i] ^= 1;
+                temp2Ans++;
+                st2.push(temp2[i] - '0');
+            }
+
+        }
+        return min(temp1Ans , temp2Ans);
+
+        
+    }
+};
