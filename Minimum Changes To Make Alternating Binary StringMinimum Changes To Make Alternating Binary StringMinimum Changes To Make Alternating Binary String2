@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minOperations(string s) {
+        string temp2 = s;
+        string temp1 = s;
+        int temp1Ans = 0;
+        int temp2Ans = 1;
+        for(int i = 1 ; i<temp1.size();i++){
+            if(((temp1[i] - '0') ^ (temp1[i-1] - '0')) == 0){
+                temp1[i] ^= 1;
+                temp1Ans++;
+            }
+        }
+        temp2[0] ^= 1;
+        for(int i = 1 ; i<temp2.size();i++){
+            if(((temp2[i] - '0') ^ (temp2[i-1] - '0')) == 0){
+                temp2[i] ^= 1;
+                temp2Ans++;
+            }
+        }
+        return min(temp1Ans , temp2Ans);
+    }
+};
