@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string findDifferentBinaryString(vector<string>& nums) {
+        int n = nums.size();
+        vector<int>hash(1 << n , 0);
+        int ans;
+
+        for(int i = 0 ; i<n ; i++){
+            int decimal = stoi(nums[i] , nullptr , 2);
+            hash[decimal] = 1;
+        }
+
+        for(int i = 0 ;i<hash.size() ; i++){
+            if(hash[i] == 0){
+                ans = i;
+                break;
+            }
+        }
+        string temp = bitset<32>(ans).to_string();
+        string final = temp.substr(32-n);
+        return final;
+    }
+};
