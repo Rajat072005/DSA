@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int flag1 = 0;
+    int flag2 = 0;
+    int t;
+    //cout<<"enter no of testcase : ";
+    cin>>t;
+    vector<string>ans;
+    for(int a = 0 ; a<t ; a++){
+        int flag1 = 0;
+        int flag2 = 0;
+        int n;
+        //cout<<"enter array size : ";
+        cin>>n;
+        int arr[n];
+        for(int i = 0 ; i<n ; i++){
+            cin>>arr[i];
+        }
+
+        unordered_map<int , int>mpp1;
+        unordered_map<int , int>mpp2;
+        int colour1 = 0;
+        int colour2 = 1;
+        //0-> red , 1->blue
+        for(int i = 0 ;i<n ; i++){
+            mpp1[arr[i]] = colour1;
+            mpp2[arr[i]] = colour2;
+            colour1 ^= 1;
+            colour2 ^= 1;
+
+        }
+        sort(arr , arr + n);
+        int prevColour = -1;
+        for(int i = 0 ; i<n ; i++){
+            int currColour = mpp1[arr[i]];
+            if(i-1 >= 0){
+                if(prevColour == currColour){
+                    flag1 = 1;
+                    break;
+                }
+
+            }
+            prevColour = currColour;
+        }
+        prevColour = -1;
+        for(int i = 0 ; i<n ; i++){
+            int currColour = mpp2[arr[i]];
+            if(i-1 >= 0){
+                if(prevColour == currColour){
+                    flag2 = 1;
+                    break;
+                }
+
+            }
+            prevColour = currColour;
+        }
+        if(flag1 && flag2)ans.push_back("NO");
+        else{
+            ans.push_back("YES");
+        }
+
+        
+    }
+    for(int i = 0 ; i<ans.size() ; i++){
+            cout<<ans[i]<<endl;
+    }
+
+    return 0;
+
+    
+
+}
