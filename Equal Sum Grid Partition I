@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool canPartitionGrid(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<long long int>SuffixSumRow(m,0);
+        vector<long long int>SuffixSumCol(n,0);
+        long long int suffixSumRow = 0;
+        long long int suffixSumCol = 0;
+
+        for(int i = m-1 ; i>=0 ; i--){
+            SuffixSumRow[i] = suffixSumRow;
+            for(int j = 0 ; j<n ; j++){
+                suffixSumRow += grid[i][j];
+                
+            }
+        }
+        long long int prefixSumRow = 0;
+        for(int i = 0 ; i<m-1 ; i++){
+            for(int j = 0 ; j<n ; j++){
+                prefixSumRow += grid[i][j];
+            }
+            if(prefixSumRow == SuffixSumRow[i])return true;
+        }
+
+        for(int i = n-1 ; i>=0 ; i--){
+            SuffixSumCol[i] = suffixSumCol;
+            for(int j = 0 ; j<m ; j++){
+                suffixSumCol += grid[j][i];
+                
+            }
+        }
+        long long int prefixSumCol = 0;
+        for(int i = 0 ; i<n-1 ; i++){
+            
+            for(int j = 0 ; j<m ; j++){
+                prefixSumCol += grid[j][i];
+            }
+            if(prefixSumCol == SuffixSumCol[i])return true;
+        }
+
+
+        return false;
+    }
+};
