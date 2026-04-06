@@ -1,0 +1,59 @@
+class Solution {
+public:
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        int x = 0;
+        int y = 0;
+        int size = commands.size();
+        int n = obstacles.size();
+        int ans = INT_MIN;
+        int direction = 0;
+        // 0 -> N , 1->E , 2->S , 3->W
+        set<pair<int,int>>st;
+        for(int i = 0 ; i<n ; i++){
+            st.insert({obstacles[i][0],obstacles[i][1]});
+        }
+        for(int i = 0 ; i<size ; i++){
+            int units = commands[i];
+            if(units == -1){
+                direction = (direction + 1) % 4;
+            }
+            else if(units == -2){
+                direction = (direction -1 + 4) % 4;
+            }
+            else if(direction == 0){
+                for(int j = 0 ; j<units ; j++){
+                    if(st.find({x , y + 1}) != st.end()){
+                        break;
+                    }
+                    y += 1;
+                }
+            }
+            else if(direction == 1){
+                for(int j = 0 ; j<units ; j++){
+                    if(st.find({x + 1 , y}) != st.end()){
+                        break;
+                    }
+                    x += 1;
+                }
+            }
+            else if(direction == 2){
+                for(int j = 0 ; j<units ; j++){
+                    if(st.find({x  , y - 1}) != st.end()){
+                        break;
+                    }
+                    y -= 1;
+                }
+            }
+            else{
+                for(int j = 0 ; j<units ; j++){
+                    if(st.find({x -1  , y}) != st.end()){
+                        break;
+                    }
+                    x -= 1;
+                }
+            }
+            ans = max(ans , (x*x) + (y*y));
+        }
+        return ans;
+    }
+};
