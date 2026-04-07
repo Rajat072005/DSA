@@ -1,0 +1,86 @@
+class Robot {
+public:
+    int width;
+    int height;
+    int direction;
+    int x, y; 
+    Robot(int width, int height) {
+        this->width = width;
+        this->height = height;
+        this->x = 0;  
+        this->y = 0;
+        direction = 1;
+    }
+    
+    void step(int num) {
+        int perimeter = 2 * (width + height - 2);
+        int units = num % perimeter;
+
+        if (units == 0) units = perimeter;
+        while(units != 0){
+            if (direction == 0){
+                if(y + units > height - 1){
+                    units -= ((height -1) - y);
+                    y = height - 1;
+                    direction = (direction - 1 + 4) % 4;
+                }
+                else{
+                    y += units;
+                    units = 0;
+                }
+            }
+            else if(direction == 1){
+                if(x + units >width - 1){
+                    units -= ((width -1) - x);
+                    x = width - 1;
+                    direction = (direction - 1 + 4) % 4;
+                }
+                else{
+                    x += units;
+                    units = 0;
+                }
+            }
+            else if(direction == 2){
+                if(y - units < 0){
+                    units = units - y;
+                    y = 0;
+                    direction = (direction - 1 + 4) % 4;
+                }
+                else{
+                    y -= units;
+                    units = 0;
+                }
+            }
+            else{
+                if(x -  units < 0){
+                    units = units - x;
+                    x = 0;
+                    direction = (direction - 1 + 4) % 4;
+                }
+                else{
+                    x -= units;
+                    units = 0;
+                }
+            }
+        }
+    }
+    
+    vector<int> getPos() {
+        return {x,y};
+    }
+    
+    string getDir() {
+        if(direction == 0)return "North";
+        else if(direction == 1)return "East";
+        else if(direction == 2)return "South";
+        else return "West";
+    }
+};
+
+/**
+ * Your Robot object will be instantiated and called as such:
+ * Robot* obj = new Robot(width, height);
+ * obj->step(num);
+ * vector<int> param_2 = obj->getPos();
+ * string param_3 = obj->getDir();
+ */
