@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int xorAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+        int numsSize = nums.size();
+        int queriesSize = queries.size();
+        int modulo = 1e9 + 7;
+        int ans = 0;
+        for(int i = 0 ; i<queriesSize ; i++){
+            int startIndex = queries[i][0];
+            int endIndex = queries[i][1];
+            while(startIndex <= endIndex && startIndex<numsSize){
+                nums[startIndex] = ((long long)nums[startIndex] * queries[i][3]) % modulo;
+                startIndex += queries[i][2];
+
+            }
+            
+        }
+
+        for(int i = 0 ; i<numsSize ; i++){
+            ans ^= nums[i];
+        }
+        return ans;
+    }
+};
